@@ -1,53 +1,47 @@
-<details><summary>初回導入</summary>
+# React Based On Design System
 
-### I. Docker環境を準備
+デザインシステムに基づいたReactプロジェクトの概要
 
-1. [newwebsystem_env](https://svr01git.dicjapan.local/laboratory/newsystem/newwebsystem_env)の環境を構築
+## 環境構成
 
-### II. 開発コンテナを開く
+Node.js: v20
+React: v18
+パッケージマネージャ: Yarn 1
+ビルドツール: Vite
 
-@VSCode.コマンドパレット
+## 初回導入手順
 
-1. F1を押して以下の項目を選択
+1.Node.js v20 の環境を準備します。
 
-```
-Dev Containers: Open Folder in Container...
-```
+2.リポジトリをクローンします。
 
-2. 以下まで行ってOKボタン
-
-```
-~/docker/newwebsystem_env/react/
-```
-
-(最初からあるindex.htmlは不要のでを削除)
-
-### III. gitクローン
-
-1. Dir移動
-
-```
-cd /usr/src/app/react_vite_project
+```bash
+git clone <repository-url>
+cd <repository-directory>
 ```
 
-2. ここのリポジトリをgit cloneする  
-   [clone方法はこちら](https://svr01git.dicjapan.local/other/gitclonecommandgen)
+3.必要なパッケージをインストールします。
 
-### IV. ライブラリ解決
-
-```
+```bash
 yarn
 ```
 
-</details>
+4.ローカルサーバーを起動します。
 
-## 開発時コマンド
+```bash
+yarn dev
+```
 
-### 開発コンテナのターミナルで、適宜実行
+## 使用ライブラリ
+
+Storybook: UIカタログ作成ツール
+React Hook Form: フォームバリデーションライブラリ
+Hygen: コードジェネレーター
+
+## 開発時のコマンド一覧
 
 | 操作            | コマンド         | 備考                     |
 | --------------- | ---------------- | ------------------------ |
-| 作業Dir         | `cd react-vite`  |                          |
 | Webサービス起動 | `yarn dev`       | `http://localhost:5173/` |
 | UIカタログ起動  | `yarn storybook` | `http://localhost:6006/` |
 | ビルド          | `yarn build`     |                          |
