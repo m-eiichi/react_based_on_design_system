@@ -1,0 +1,44 @@
+.logo {
+  width: 100px;
+}
+
+.nav {
+  display: none;
+
+  > ul {
+    display: flex;
+    gap: var(--size-f-03);
+
+    & a {
+      color: var(--base-font-color);
+      transition: all var(--transition-delay-default);
+
+      &:hover {
+        color: var(--base-font-hover-color);
+      }
+    }
+  }
+}
+
+.button__container {
+  display: flex;
+  gap: var(--size-f-03);
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  gap: var(--size-f-03);
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@media (--viewport-over-desktop) {
+  .logo {
+    width: 150px;
+  }
+
+  .nav {
+    display: block;
+  }
+}

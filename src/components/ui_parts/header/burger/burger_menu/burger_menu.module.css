@@ -1,0 +1,16 @@
+.menu {
+  position: fixed;
+  top: var(--height-header);
+  left: 0;
+  z-index: 1;
+  width: auto;
+  height: 100vh;
+  overflow: hidden;
+  transition: var(--transition-delay-default);
+  transform: translateX(-100%);
+
+  &.isOpen {
+    overflow: visible;
+    transform: translateX(0);
+  }
+}

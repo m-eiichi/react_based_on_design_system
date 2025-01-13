@@ -1,0 +1,18 @@
+.label {
+  display: flex;
+  gap: var(--size-f-01);
+  align-items: center;
+
+  &.disabled {
+    color: var(--color-disabled-text);
+  }
+}
+
+.label_text {
+  font: var(--label-l);
+}
+
+.requirement {
+  font: var(--label-l);
+  color: var(--color-alert-text);
+}
