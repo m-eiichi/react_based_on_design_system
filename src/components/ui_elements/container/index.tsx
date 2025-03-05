@@ -1,6 +1,30 @@
 import { type ReactElement } from "react";
+import { SpacingProps } from "@/types/size.ts";
 import { ContainerProps } from "./types.ts";
 import Styles from "./container.module.css";
+import { generateClassNamesFromProps } from "@/utils/generateClassNamesFromProps.ts";
+
+/**
+ * generateContainerResponsiveClass 関数
+ *
+ * @description
+ * 指定されたコンテナのスタイルプロパティ（マージンやパディングなど）に基づいて、
+ * 適切な CSS クラス名を動的に生成します。
+ *
+ * また、`prefix` を指定することで、タブレットや PC などのレスポンシブクラスを適用できます。
+ *
+ * @param {SpacingProps} props - コンテナのスタイルプロパティ（マージン・パディングなど）
+ * @param {string} [prefix] - 任意のプレフィックス（例: "tb", "pc"）
+ * @returns {string} 生成された CSS クラス名の文字列
+ */
+
+const generateContainerResponsiveClass = (
+  props: SpacingProps,
+  prefix?: string,
+): string => {
+  const classes = [...generateClassNamesFromProps(Styles, props, prefix)];
+  return classes.filter(Boolean).join(" ");
+};
 
 /**
  * <Container/>コンポーネント
@@ -9,81 +33,121 @@ import Styles from "./container.module.css";
  * @param {ContainerProps} types.ts参照
  * @returns {ReactElement | null} コンポーネント
  */
-
 export const Container = ({
+  style,
   as: As = "div",
-  gutter = undefined,
-  overTbGutter = undefined,
-  overPcGutter = undefined,
-  paddingVertical = undefined,
-  overTbPaddingVertical = undefined,
-  overPcPaddingVertical = undefined,
+  m,
+  mx,
+  my,
+  mt,
+  mb,
+  mr,
+  ml,
+  p,
+  px,
+  py,
+  pt,
+  pb,
+  pr,
+  pl,
+  tbM,
+  tbMx,
+  tbMy,
+  tbMt,
+  tbMb,
+  tbMr,
+  tbMl,
+  tbP,
+  tbPx,
+  tbPy,
+  tbPt,
+  tbPb,
+  tbPr,
+  tbPl,
+  pcM,
+  pcMx,
+  pcMy,
+  pcMt,
+  pcMb,
+  pcMr,
+  pcMl,
+  pcP,
+  pcPx,
+  pcPy,
+  pcPt,
+  pcPb,
+  pcPr,
+  pcPl,
   fixed = false,
-  maxWidth,
+  width,
   children,
 }: ContainerProps): ReactElement => {
   const className = [
     Styles.container,
-    //gutter が "xs", "s", "m", "l", "xl"のいずれかの場合
-    gutter &&
-      ["xs", "s", "m", "l", "xl"].includes(gutter) &&
-      Styles[`gutter_${gutter}`],
-
-    overTbGutter && Styles[`overTbGutter_${overTbGutter}`],
-    overPcGutter && Styles[`overPcGutter_${overPcGutter}`],
-    //paddingVertical が "xs", "s", "m", "l", "xl"のいずれかの場合
-    paddingVertical &&
-      ["xs", "s", "m", "l", "xl"].includes(paddingVertical) &&
-      Styles[`paddingVertical_${paddingVertical}`],
-
-    overTbPaddingVertical &&
-      Styles[`overTbPaddingVertical_${overTbPaddingVertical}`],
-    overPcPaddingVertical &&
-      Styles[`overPcPaddingVertical_${overPcPaddingVertical}`],
-    !fixed ? Styles.width_full : Styles.width_auto,
-    //maxWidth が "xs", "s", "m", "l", "xl"のいずれかの場合
-    maxWidth &&
-      ["xs", "s", "m", "l", "xl"].includes(maxWidth) &&
-      (fixed ? Styles[`width_${maxWidth}`] : Styles[`maxWidth_${maxWidth}`]),
+    width && fixed ? Styles[`width_${width}`] : Styles[`maxWidth_${width}`],
+    // デフォルトのCSS
+    generateContainerResponsiveClass({
+      m,
+      mx,
+      my,
+      mt,
+      mb,
+      mr,
+      ml,
+      p,
+      px,
+      py,
+      pt,
+      pb,
+      pr,
+      pl,
+    }),
+    // タブレット用のCSS
+    generateContainerResponsiveClass(
+      {
+        m: tbM,
+        mx: tbMx,
+        my: tbMy,
+        mt: tbMt,
+        mb: tbMb,
+        mr: tbMr,
+        ml: tbMl,
+        p: tbP,
+        px: tbPx,
+        py: tbPy,
+        pt: tbPt,
+        pb: tbPb,
+        pr: tbPr,
+        pl: tbPl,
+      },
+      "tb",
+    ),
+    // PC用のCSS
+    generateContainerResponsiveClass(
+      {
+        m: pcM,
+        mx: pcMx,
+        my: pcMy,
+        mt: pcMt,
+        mb: pcMb,
+        mr: pcMr,
+        ml: pcMl,
+        p: pcP,
+        px: pcPx,
+        py: pcPy,
+        pt: pcPt,
+        pb: pcPb,
+        pr: pcPr,
+        pl: pcPl,
+      },
+      "pc",
+    ),
   ]
-
     .filter(Boolean)
     .join(" ");
 
-  const dynamicStyle: {
-    width?: string;
-    maxWidth?: string;
-    paddingLeft?: string;
-    paddingRight?: string;
-    paddingTop?: string;
-    paddingBottom?: string;
-  } = {};
-
-  // 関数で条件を整理
-  const isCustomSize = (value: unknown): value is string =>
-    typeof value === "string" && !["xs", "s", "m", "l", "xl"].includes(value);
-
-  // width / maxWidth の設定
-  if (fixed && isCustomSize(maxWidth)) {
-    dynamicStyle.width = maxWidth;
-  } else if (!fixed && isCustomSize(maxWidth)) {
-    dynamicStyle.maxWidth = maxWidth;
-  }
-
-  // paddingLeft / paddingRight の設定
-  if (isCustomSize(gutter)) {
-    dynamicStyle.paddingLeft = gutter;
-    dynamicStyle.paddingRight = gutter;
-  }
-
-  // paddingTop / paddingBottom の設定
-  if (isCustomSize(paddingVertical)) {
-    dynamicStyle.paddingTop = paddingVertical;
-    dynamicStyle.paddingBottom = paddingVertical;
-  }
-
   return (
-    <As className={className} style={dynamicStyle}>
+    <As className={className} style={style}>
       {children}
     </As>
   );

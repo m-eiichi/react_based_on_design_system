@@ -1,3 +1,5 @@
+// TODO defaultvalueへの対応
+
 import { ReactElement } from "react";
 import { FieldValues } from "react-hook-form";
 import { FlexContainer } from "@/components/ui_elements/flex_container";
@@ -49,7 +51,8 @@ export const RadioButtons = <T extends FieldValues>({
         direction={vertical && vertical}
         pcDirection={pcVertical && pcVertical}
         alignItems="stretch"
-        gap={tile ? "8px 16px" : "8px 64px"}
+        gap={tile ? "s" : size === "s" ? "m" : undefined}
+        style={!tile && size !== "s" ? { gap: "24px 40px" } : undefined}
       >
         {items &&
           items.map((item: RadioButtonItemProps) => {

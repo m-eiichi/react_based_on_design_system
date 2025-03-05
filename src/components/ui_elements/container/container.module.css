@@ -1,14 +1,9 @@
+@import "../../../assets/styles/extend/padding_margin.css";
+
 .container {
   margin-right: auto;
   margin-left: auto;
-}
-
-.width_auto {
-  width: auto;
-}
-
-.width_full {
-  width: 100%;
+  @extend %padding_margin;
 }
 
 .width_xs {
@@ -29,56 +24,6 @@
 
 .width_xl {
   width: 1920px;
-}
-
-.gutter_xs {
-  padding-right: var(--size-f-01);
-  padding-left: var(--size-f-01);
-}
-
-.gutter_s {
-  padding-right: var(--size-f-02);
-  padding-left: var(--size-f-02);
-}
-
-.gutter_m {
-  padding-right: var(--size-f-03);
-  padding-left: var(--size-f-03);
-}
-
-.gutter_l {
-  padding-right: var(--size-f-04);
-  padding-left: var(--size-f-04);
-}
-
-.gutter_xl {
-  padding-right: var(--size-f-05);
-  padding-left: var(--size-f-05);
-}
-
-.paddingVertical_xs {
-  padding-top: var(--size-f-01);
-  padding-bottom: var(--size-f-01);
-}
-
-.paddingVertical_s {
-  padding-top: var(--size-f-02);
-  padding-bottom: var(--size-f-02);
-}
-
-.paddingVertical_m {
-  padding-top: var(--size-f-03);
-  padding-bottom: var(--size-f-03);
-}
-
-.paddingVertical_l {
-  padding-top: var(--size-f-04);
-  padding-bottom: var(--size-f-04);
-}
-
-.paddingVertical_xl {
-  padding-top: var(--size-f-05);
-  padding-bottom: var(--size-f-05);
 }
 
 .maxWidth_xs {
@@ -102,105 +47,13 @@
 }
 
 @media (--viewport-over-tablet) {
-  .overTbGutter_xs {
-    padding-right: var(--size-f-01);
-    padding-left: var(--size-f-01);
-  }
-
-  .overTbGutter_s {
-    padding-right: var(--size-f-02);
-    padding-left: var(--size-f-02);
-  }
-
-  .overTbGutter_m {
-    padding-right: var(--size-f-03);
-    padding-left: var(--size-f-03);
-  }
-
-  .overTbGutter_l {
-    padding-right: var(--size-f-04);
-    padding-left: var(--size-f-04);
-  }
-
-  .overTbGutter_xl {
-    padding-right: var(--size-f-05);
-    padding-left: var(--size-f-05);
-  }
-
-  .overTbPaddingVertical_xs {
-    padding-top: var(--size-f-01);
-    padding-bottom: var(--size-f-01);
-  }
-
-  .overTbPaddingVertical_s {
-    padding-top: var(--size-f-02);
-    padding-bottom: var(--size-f-02);
-  }
-
-  .overTbPaddingVertical_m {
-    padding-top: var(--size-f-03);
-    padding-bottom: var(--size-f-03);
-  }
-
-  .overTbPaddingVertical_l {
-    padding-top: var(--size-f-04);
-    padding-bottom: var(--size-f-04);
-  }
-
-  .overTbPaddingVertical_xl {
-    padding-top: var(--size-f-05);
-    padding-bottom: var(--size-f-05);
+  .container {
+    @extend %tb_padding_margin;
   }
 }
 
 @media (--viewport-over-desktop) {
-  .overPcGutter_xs {
-    padding-right: var(--size-f-01);
-    padding-left: var(--size-f-01);
-  }
-
-  .overPcGutter_s {
-    padding-right: var(--size-f-02);
-    padding-left: var(--size-f-02);
-  }
-
-  .overPcGutter_m {
-    padding-right: var(--size-f-03);
-    padding-left: var(--size-f-03);
-  }
-
-  .overPcGutter_l {
-    padding-right: var(--size-f-04);
-    padding-left: var(--size-f-04);
-  }
-
-  .overPcGutter_xl {
-    padding-right: var(--size-f-05);
-    padding-left: var(--size-f-05);
-  }
-
-  .overPcPaddingVertical_xs {
-    padding-top: var(--size-f-01);
-    padding-bottom: var(--size-f-01);
-  }
-
-  .overPcPaddingVertical_s {
-    padding-top: var(--size-f-02);
-    padding-bottom: var(--size-f-02);
-  }
-
-  .overPcPaddingVertical_m {
-    padding-top: var(--size-f-03);
-    padding-bottom: var(--size-f-03);
-  }
-
-  .overPcPaddingVertical_l {
-    padding-top: var(--size-f-04);
-    padding-bottom: var(--size-f-04);
-  }
-
-  .overPcPaddingVertical_xl {
-    padding-top: var(--size-f-05);
-    padding-bottom: var(--size-f-05);
+  .container {
+    @extend %pc_padding_margin;
   }
 }

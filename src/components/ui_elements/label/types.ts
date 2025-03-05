@@ -7,8 +7,10 @@
  * @property disabled True=disabled(見た目のみ)
  */
 export type LabelProps = {
+  style?: React.CSSProperties;
   text?: string;
   requirement?: boolean;
   labelFor?: string;
   disabled?: boolean;
+  textAlign?: "left" | "center" | "right";
 };

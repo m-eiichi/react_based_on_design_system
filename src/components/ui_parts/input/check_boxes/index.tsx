@@ -1,3 +1,6 @@
+// TODO defaultvalueへの対応
+// TODO 54行目のgapの修正
+
 import { type ReactElement } from "react";
 import { FieldValues } from "react-hook-form";
 import { FlexContainer } from "@/components/ui_elements/flex_container";
@@ -49,7 +52,8 @@ export const CheckBoxes = <T extends FieldValues>({
         direction={vertical && vertical}
         pcDirection={pcVertical && pcVertical}
         alignItems="stretch"
-        gap={tile ? "s" : size === "s" ? "m" : "24px 40px"}
+        gap={tile ? "s" : size === "s" ? "m" : undefined}
+        style={!tile && size !== "s" ? { gap: "24px 40px" } : undefined}
       >
         {items &&
           items.map((item: CheckBoxesItemProps) => {

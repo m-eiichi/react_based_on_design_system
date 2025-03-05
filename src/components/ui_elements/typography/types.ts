@@ -1,5 +1,8 @@
+import React from "react";
+
 export type TypographyProps = {
-  as?: "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "span";
+  style?: React.CSSProperties;
+  as?: "p" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "span" | "a";
   color?:
     | "success"
     | "error"
@@ -7,9 +10,10 @@ export type TypographyProps = {
     | "warning"
     | "description"
     | "link"
-    | "textPrimary"
-    | "textSecondary"
-    | "textDisabled";
+    | "primary"
+    | "secondary"
+    | "disabled"
+    | "white";
   size?:
     | "body"
     | "caption"

@@ -93,24 +93,28 @@
   &.l {
     min-width: 136px;
     height: 56px;
+    padding: 0 1em;
     border-radius: var(--radius-m);
   }
 
   &.m {
     min-width: 96px;
     height: 48px;
+    padding: 0 1em;
     border-radius: var(--radius-m);
   }
 
   &.s {
     min-width: 80px;
     height: 36px;
+    padding: 0 12px;
     border-radius: var(--radius-s);
   }
 
   &.xs {
     min-width: 72px;
     height: 28px;
+    padding: 0 8px;
     font: normal bold 14px/1.5 sans-serif;
     border-radius: var(--radius-s);
   }

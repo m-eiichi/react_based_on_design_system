@@ -1,14 +1,22 @@
 import { type ReactElement } from "react";
-import { Box } from "@/components/ui_elements/box";
-// import { FlexContainer } from "@/components/ui_elements/flex_container";
-import { Headline } from "@/components/ui_elements/headline";
-// import { useMediaQuery } from "react-responsive";
 
-import { useCustomForm } from "@/hooks/useCustomForm";
+// zodのインポート
 import { z } from "zod";
-import { createAnyValidate } from "@/utils/validation";
+
+// jotai関連のインポート
+import { useSetAtom } from "jotai";
+import { alertAtom } from "@/atoms";
+
+import { useDialog } from "@/hooks/useDialog.tsx";
+import { useCustomForm } from "@/hooks/useCustomForm";
+// import { useMediaQuery } from "react-responsive";
+import { Button } from "@/components/ui_elements/button/index.tsx";
+// import { Container } from "@/components/ui_elements/container";
+import { Box } from "@/components/ui_elements/box";
 import { CheckBox } from "@/components/ui_parts/input/check_box";
 import { RadioButton } from "@/components/ui_parts/input/radio_button";
+
+import { createAnyValidate } from "@/utils/validation";
 
 const formSchema = z.object({
   c: createAnyValidate(),
@@ -16,6 +24,19 @@ const formSchema = z.object({
 });
 
 export const Home = (): ReactElement => {
+  const { openDialog } = useDialog();
+
+  const setAlertData = useSetAtom(alertAtom);
+  const handlePasswordReset = () => {
+    setAlertData({
+      title: "Alert Title",
+      children: "alert detail description",
+      // onClick: () => {
+      //   // 処理を記述
+      // },
+    });
+    openDialog("alert");
+  };
   // const isLargeScreen = useMediaQuery({ query: "(max-width: 1280px)" });
   const defaultValues = {
     c: "",
@@ -26,10 +47,13 @@ export const Home = (): ReactElement => {
     defaultValues: defaultValues,
   });
   return (
-    <Box as="section" padding="xl">
-      <Headline size="xl" marginNone>
-        Home
-      </Headline>
+    <Box
+      p="l"
+      m="xl"
+      hoverShadow
+      backgroundColor={undefined}
+      onClick={() => console.log("aaa")}
+    >
       <CheckBox
         id="c"
         value="c"
@@ -49,6 +73,7 @@ export const Home = (): ReactElement => {
         text="radio"
         width="500px"
       />
+      <Button onClick={() => handlePasswordReset()}>アラート表示</Button>
     </Box>
   );
 };

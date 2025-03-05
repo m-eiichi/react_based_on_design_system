@@ -1,16 +1,12 @@
+import { SpacingProps, PrefixedSpacingProps } from "@/types/size.ts";
+
 /**
  * <Box/>プロパティ
  *
+ * @property style 直接styleを指定するプロパティ
  * @property as　適用タグ名
  * @property width　幅 string
  * @property height　高さ string
- * @property maxWidth　最大幅
- * @property minWidth　最小幅
- * @property maxHeight　最大高さ
- * @property minHeight　最小高さ
- * @property padding　パディングの指定
- * @property overTbPadding　576px以上時のパディングの指定
- * @property overPcPadding　993px以上時のパディングの指定
  * @property border　ボーダーの有無
  * @property borderRadius　角丸の指定
  * @property overTbBorderRadius　576px以上時の角丸の指定
@@ -23,25 +19,24 @@
  * @property children　子要素
  */
 
-export type BoxProps = {
-  as?: "div" | "section" | "article";
-  width?: string;
-  height?: string;
-  maxWidth?: string;
-  minWidth?: string;
-  maxHeight?: string;
-  minHeight?: string;
-  padding?: "xs" | "s" | "m" | "l" | "xl";
-  overTbPadding?: "xs" | "s" | "m" | "l" | "xl";
-  overPcPadding?: "xs" | "s" | "m" | "l" | "xl";
-  border?: boolean;
+export type BoxProps = SpacingProps &
+  PrefixedSpacingProps<"tb"> &
+  PrefixedSpacingProps<"pc"> & {
+    style?: React.CSSProperties;
+    as?: "div" | "section" | "article";
+    width?: "full" | "auto";
+    height?: "full" | "auto";
+    border?: boolean;
+    borderRadius?: "xs" | "s" | "m" | "l" | "xl" | "xxl";
+    tbBorderRadius?: "xs" | "s" | "m" | "l" | "xl" | "xxl";
+    pcBorderRadius?: "xs" | "s" | "m" | "l" | "xl" | "xxl";
+    shadow?: boolean;
+    hoverShadow?: boolean;
+    backgroundColor?: "primary" | "secondary" | "tertiary";
+    transition?: boolean;
+    children?: React.ReactNode;
+    onClick?: () => void;
+  };
+export type BoxResponsiveProps = SpacingProps & {
   borderRadius?: "xs" | "s" | "m" | "l" | "xl" | "xxl";
-  overTbBorderRadius?: "xs" | "s" | "m" | "l" | "xl" | "xxl";
-  overPcBorderRadius?: "xs" | "s" | "m" | "l" | "xl" | "xxl";
-  shadow?: boolean;
-  hoverShadow?: boolean;
-  backgroundColor?: "primary" | "secondary" | "tertiary";
-  transition?: boolean;
-  children?: React.ReactNode;
-  onClick?: () => void;
 };

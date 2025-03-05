@@ -27,16 +27,20 @@
   }
 }
 
-.textPrimary {
+.primary {
   color: var(--color-base-text);
 }
 
-.textSecondary {
+.secondary {
   color: var(--color-primary);
 }
 
-.textDisabled {
+.disabled {
   color: var(--color-disabled-text);
+}
+
+.white {
+  color: var(--color-on-fill-text);
 }
 
 .body {

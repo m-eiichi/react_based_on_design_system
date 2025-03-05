@@ -11,6 +11,7 @@ import Styles from "./button.module.css";
  * @returns {ReactElement} コンポーネント
  */
 export const Button = ({
+  style,
   color,
   size,
   fullWidth,
@@ -31,6 +32,7 @@ export const Button = ({
       {size == "s" || size == "xs" ? (
         <div className={Styles.button__wrap}>
           <button
+            style={{ ...style }}
             className={className.join(" ")}
             onClick={onClick}
             disabled={disabled}
@@ -41,6 +43,7 @@ export const Button = ({
         </div>
       ) : (
         <button
+          style={{ ...style }}
           className={className.join(" ")}
           onClick={onClick}
           disabled={disabled}

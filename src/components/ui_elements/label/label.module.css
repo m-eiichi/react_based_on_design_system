@@ -1,7 +1,6 @@
 .label {
   display: flex;
   gap: var(--size-f-01);
-  align-items: center;
 
   &.disabled {
     color: var(--color-disabled-text);
@@ -15,4 +14,16 @@
 .requirement {
   font: var(--label-l);
   color: var(--color-alert-text);
+}
+
+.textAlign_left {
+  justify-content: flex-start;
+}
+
+.textAlign_center {
+  justify-content: center;
+}
+
+.textAlign_right {
+  justify-content: flex-end;
 }

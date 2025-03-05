@@ -1,7 +1,32 @@
+// TODO onClicのバブリングの対応
 import { type ReactElement } from "react";
 
-import { BoxProps } from "./types";
+import { BoxProps, BoxResponsiveProps } from "./types";
 import Styles from "./box.module.css";
+
+import { generateClassNamesFromProps } from "@/utils/generateClassNamesFromProps.ts";
+
+/**
+ * generateBoxResponsiveClass 関数
+ *
+ * @description
+ * 指定されたボックスのスタイルプロパティから、対応する CSS クラス名を生成します。
+ * プロパティのキーをスネークケースに変換し、CSS モジュールのクラス名として適用します。
+ *
+ * また、`prefix` を指定することで、異なるスクリーンサイズ（タブレット・PC）ごとの
+ * レスポンシブクラスを動的に付与できます。
+ *
+ * @param {BoxResponsiveProps} props - ボックスのスタイルプロパティ
+ * @param {string} [prefix] - 任意のプレフィックス（例: "tb", "pc"）
+ * @returns {string} 生成された CSS クラス名の文字列
+ */
+const generateBoxResponsiveClass = (
+  props: BoxResponsiveProps,
+  prefix?: string,
+): string => {
+  const classes = [...generateClassNamesFromProps(Styles, props, prefix)];
+  return classes.filter(Boolean).join(" ");
+};
 
 /**
  * <Box/>コンポーネント
@@ -10,72 +35,145 @@ import Styles from "./box.module.css";
  * @param {BoxProps} props types.ts参照
  * @returns {ReactElement} コンポーネント
  */
+
 export const Box = ({
+  style,
   as: As = "div",
   width,
   height,
-  maxWidth,
-  minWidth,
-  maxHeight,
-  minHeight,
-  padding,
-  overTbPadding,
-  overPcPadding,
-  border = false,
-  borderRadius,
-  overTbBorderRadius,
-  overPcBorderRadius,
   shadow = false,
   hoverShadow = false,
   backgroundColor = "primary",
   transition = true,
+  border = false,
   children,
+  borderRadius,
+  tbBorderRadius,
+  pcBorderRadius,
   onClick,
+  m,
+  mx,
+  my,
+  mt,
+  mb,
+  mr,
+  ml,
+  p,
+  px,
+  py,
+  pt,
+  pb,
+  pr,
+  pl,
+  tbM,
+  tbMx,
+  tbMy,
+  tbMt,
+  tbMb,
+  tbMr,
+  tbMl,
+  tbP,
+  tbPx,
+  tbPy,
+  tbPt,
+  tbPb,
+  tbPr,
+  tbPl,
+  pcM,
+  pcMx,
+  pcMy,
+  pcMt,
+  pcMb,
+  pcMr,
+  pcMl,
+  pcP,
+  pcPx,
+  pcPy,
+  pcPt,
+  pcPb,
+  pcPr,
+  pcPl,
 }: BoxProps): ReactElement => {
   const className = [
     Styles.box,
-
     width === "auto" || !width
       ? Styles.width_auto
       : width === "full" && Styles.width_full,
     height === "auto" || !height
       ? Styles.height_auto
       : height === "full" && Styles.height_full,
-    padding && Styles[`padding_${padding}`],
-    overTbPadding && Styles[`over_tb_padding_${overTbPadding}`],
-    overPcPadding && Styles[`over_pc_padding_${overPcPadding}`],
     border && Styles.border,
-    borderRadius && Styles[`border_radius_${borderRadius}`],
-    overTbBorderRadius && Styles[`over_tb_border_radius_${overTbBorderRadius}`],
-    overPcBorderRadius && Styles[`over_pc_border_radius_${overPcBorderRadius}`],
-    shadow && Styles.shadow,
     hoverShadow && Styles.hover_shadow,
     transition && Styles.transition,
     Styles[`bg_${backgroundColor}`],
+    shadow && Styles.shadow,
     onClick && Styles.cursorPointer,
+
+    // デフォルトのCSS
+    generateBoxResponsiveClass({
+      borderRadius,
+      m,
+      mx,
+      my,
+      mt,
+      mb,
+      mr,
+      ml,
+      p,
+      px,
+      py,
+      pt,
+      pb,
+      pr,
+      pl,
+    }),
+    // タブレット用のCSS
+    generateBoxResponsiveClass(
+      {
+        borderRadius: tbBorderRadius,
+        m: tbM,
+        mx: tbMx,
+        my: tbMy,
+        mt: tbMt,
+        mb: tbMb,
+        mr: tbMr,
+        ml: tbMl,
+        p: tbP,
+        px: tbPx,
+        py: tbPy,
+        pt: tbPt,
+        pb: tbPb,
+        pr: tbPr,
+        pl: tbPl,
+      },
+      "tb",
+    ),
+    // PC用のCSS
+    generateBoxResponsiveClass(
+      {
+        borderRadius: pcBorderRadius,
+        m: pcM,
+        mx: pcMx,
+        my: pcMy,
+        mt: pcMt,
+        mb: pcMb,
+        mr: pcMr,
+        ml: pcMl,
+        p: pcP,
+        px: pcPx,
+        py: pcPy,
+        pt: pcPt,
+        pb: pcPb,
+        pr: pcPr,
+        pl: pcPl,
+      },
+      "pc",
+    ),
   ]
     .filter(Boolean)
     .join(" ");
-
-  // width が "full" や "auto" の場合はクラス名で処理し、それ以外の文字列（"100px" など）の場合はスタイルで指定
-  const widthValue =
-    width !== "full" && width !== "auto" && width ? width : undefined;
-
-  // height が "full" や "auto" の場合はクラス名で処理し、それ以外の文字列（"100px" など）の場合はスタイルで指定
-  const heightValue =
-    height !== "full" && height !== "auto" && height ? height : undefined;
-
-  const dynamicStyle = {
-    width: widthValue,
-    height: heightValue,
-    maxWidth: maxWidth,
-    minWidth: minWidth,
-    maxHeight: maxHeight,
-    minHeight: minHeight,
-  };
-
   return (
-    <As className={className} style={dynamicStyle} onClick={onClick}>
+    <As className={className} style={style} onClick={onClick}>
       {children}
     </As>
   );

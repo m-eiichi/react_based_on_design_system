@@ -1,31 +1,10 @@
 .dialog {
-  inset: 0;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
   padding: 0;
-  overflow-y: inherit;
-  background-color: var(--white);
-  border: none;
-  border-radius: var(--radius-m);
-
-  /* IE(Internet Explorer)・Microsoft Edgeへの対応 */
-  -ms-overflow-style: none;
-
-  /* Firefoxへの対応 */
-  scrollbar-width: none;
-
-  &.size_s {
-    width: calc(100% - var(--size-f-05) - var(--size-f-05));
-    max-height: calc(100vh - var(--size-f-05) - var(--size-f-05));
-  }
-
-  &.size_m {
-    width: calc(100% - var(--size-f-04) - var(--size-f-04));
-    max-height: calc(100vh - var(--size-f-04) - var(--size-f-04));
-  }
-
-  &.size_l {
-    width: calc(100% - var(--size-f-03) - var(--size-f-03));
-    max-height: calc(100vh - var(--size-f-03) - var(--size-f-03));
-  }
+  overflow: unset;
+  background: none;
 
   &::backdrop {
     background: rgb(0 0 0 / 50%);
@@ -39,40 +18,5 @@
   /* Google Chrome、Safariへの対応 */
   &::-webkit-scrollbar {
     display: none;
-  }
-}
-
-.dialog_content {
-  max-height: calc(100vh - 112px);
-  padding: var(--size-f-02);
-  overflow-y: scroll;
-
-  /* IE(Internet Explorer)・Microsoft Edgeへの対応 */
-  -ms-overflow-style: none;
-
-  /* Firefoxへの対応 */
-  scrollbar-width: none;
-}
-
-@media (--viewport-over-tablet) {
-  .dialog {
-    &.size_s {
-      width: min(calc(100% - 128px), 432px);
-      max-height: calc(100vh - var(--size-f-05) - var(--size-f-05));
-    }
-
-    &.size_m {
-      width: min(calc(100% - 80px), 640px);
-      max-height: calc(100vh - var(--size-f-04) - var(--size-f-04));
-    }
-
-    &.size_l {
-      width: min(calc(100% - 48px), 752px);
-      max-height: calc(100vh - var(--size-f-03) - var(--size-f-03));
-    }
-  }
-
-  .dialog_content {
-    padding: var(--size-f-04) var(--size-f-05);
   }
 }

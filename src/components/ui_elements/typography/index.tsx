@@ -3,8 +3,9 @@ import { TypographyProps } from "./types";
 import Styles from "./typography.module.css";
 
 export const Typography = ({
+  style,
   as,
-  color = "textPrimary",
+  color = "primary",
   size = "body",
   align = "left",
   margin = "none",
@@ -47,8 +48,11 @@ export const Typography = ({
 
   return (
     <As
+      style={{
+        ...style,
+        ...(onClick ? { cursor: "pointer" } : {}),
+      }}
       className={className}
-      style={onClick && { cursor: "pointer" }}
       onClick={onClick}
     >
       {children}

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Dialog } from "./dialog_for_storybook";
+import { Dialog } from "../";
+import { DefaultDialogContentForSb } from "./dialog_for_storybook";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -20,11 +21,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Dialog_L: Story = {
+export const SampleDialog: Story = {
   args: {
-    title: "dialog title",
-    size: "l",
-    isOpen: false,
+    isOpen: true,
     noOverlay: false,
+    children: DefaultDialogContentForSb(),
   },
 };

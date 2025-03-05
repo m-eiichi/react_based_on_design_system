@@ -4,7 +4,6 @@ import { InputContainerForSizeS } from "@/components/ui_elements/input/input_con
 
 import { EditElementProps } from "./types";
 import Styles from "./edit_element.module.css";
-import { boolean } from "zod";
 
 /**
  * <EditElement/>コンポーネント

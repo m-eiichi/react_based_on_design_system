@@ -1,51 +1,32 @@
 import { type ReactElement } from "react";
-import { FlexContainerProps } from "./types";
+import { FlexContainerProps, FlexContainerResponsiveProps } from "./types";
 import Styles from "./flex_container.module.css";
 
-// モバイルクラス名生成関数
-const generateFlexClass = ({
-  direction = "row",
-  wrap = "nowrap",
-  alignContent = "normal",
-  justifyContent = "normal",
-  alignItems = "normal",
-  gap,
-  containerType = "normal",
-}: Partial<FlexContainerProps>): string => {
+import { generateClassNamesFromProps } from "@/utils/generateClassNamesFromProps.ts";
+
+/**
+ * `generateFlexContainerResponsiveClass` 関数
+ *
+ * @description
+ * 指定されたフレックスコンテナのスタイルプロパティに基づいて、
+ * 適切な CSS クラス名を動的に生成します。
+ *
+ * `wrap` プロパティを処理し、それ以外のフレックス関連のプロパティも適用可能です。
+ * また、`prefix` を指定することで、タブレットや PC などのレスポンシブクラスを適用できます。
+ *
+ * @param {FlexContainerResponsiveProps} props - フレックスコンテナのスタイルプロパティ
+ * @param {string} [prefix] - 任意のプレフィックス（例: "tb", "pc"）
+ * @returns {string} 生成された CSS クラス名の文字列
+ */
+
+const generateFlexContainerResponsiveClass = (
+  { wrap, ...rest }: FlexContainerResponsiveProps,
+  prefix?: string,
+): string => {
   const classes = [
-    Styles.flex,
-    Styles[`flex_${direction}`],
-    Styles[wrap === "wrap" ? "flex_wrap" : "flex_nowrap"],
-    alignContent !== "normal" && Styles[`align_content_${alignContent}`],
-    justifyContent !== "normal" && Styles[`justify_content_${justifyContent}`],
-    alignItems !== "normal" && Styles[`align_items_${alignItems}`],
-    gap && ["xs", "s", "m", "l", "xl"].includes(gap) && Styles[`gap_${gap}`],
-    containerType === "inline-size"
-      ? Styles.containerType_inline_size
-      : Styles.containerType_normal,
+    wrap && (prefix ? Styles[`${prefix}_${wrap}`] : Styles[`${wrap}`]),
+    ...generateClassNamesFromProps(Styles, rest, prefix),
   ];
-
-  return classes.filter(Boolean).join(" ");
-};
-
-// PC向けのクラス名生成
-const generatePcFlexClass = ({
-  direction,
-  wrap,
-  alignContent,
-  justifyContent,
-  alignItems,
-  gap,
-}: Partial<FlexContainerProps>): string => {
-  const classes = [
-    direction && Styles[`pc_flex_${direction}`],
-    wrap && Styles[wrap === "wrap" ? "pc_flex_wrap" : "pc_flex_nowrap"],
-    alignContent && Styles[`pc_align_content_${alignContent}`],
-    justifyContent && Styles[`pc_justify_content_${justifyContent}`],
-    alignItems && Styles[`pc_align_items_${alignItems}`],
-    gap && Styles[`pc_gap_${gap}`],
-  ];
-
   return classes.filter(Boolean).join(" ");
 };
 
@@ -57,51 +38,163 @@ const generatePcFlexClass = ({
  * @returns {ReactElement} コンポーネント
  */
 export const FlexContainer = ({
+  //共通
+  style,
+  containerType,
+  children,
+
+  //基本
   direction = "row",
   wrap = "nowrap",
   alignContent = "normal",
   justifyContent = "normal",
   alignItems = "normal",
+  m,
+  mx,
+  my,
+  mt,
+  mb,
+  mr,
+  ml,
+  p,
+  px,
+  py,
+  pt,
+  pb,
+  pr,
+  pl,
   gap,
+
+  //tbのスタイル用のプロパティ
+  tbDirection,
+  tbWrap,
+  tbAlignContent,
+  tbJustifyContent,
+  tbAlignItems,
+  tbM,
+  tbMx,
+  tbMy,
+  tbMt,
+  tbMb,
+  tbMr,
+  tbMl,
+  tbP,
+  tbPx,
+  tbPy,
+  tbPt,
+  tbPb,
+  tbPr,
+  tbPl,
+  tbGap,
+
+  // pcのスタイル用のプロパティ
   pcDirection,
   pcWrap,
   pcAlignContent,
   pcJustifyContent,
   pcAlignItems,
+  pcM,
+  pcMx,
+  pcMy,
+  pcMt,
+  pcMb,
+  pcMr,
+  pcMl,
+  pcP,
+  pcPx,
+  pcPy,
+  pcPt,
+  pcPb,
+  pcPr,
+  pcPl,
   pcGap,
-  containerType,
-  children,
 }: FlexContainerProps): ReactElement => {
   // クラス名結合
   const className = [
-    generateFlexClass({
+    Styles.flex,
+    containerType === "inline-size"
+      ? Styles.containerType_inline_size
+      : Styles.containerType_normal,
+
+    generateFlexContainerResponsiveClass({
       direction,
       wrap,
       alignContent,
       justifyContent,
       alignItems,
+      m,
+      mx,
+      my,
+      mt,
+      mb,
+      mr,
+      ml,
+      p,
+      px,
+      py,
+      pt,
+      pb,
+      pr,
+      pl,
       gap,
-      containerType,
     }),
-    generatePcFlexClass({
-      direction: pcDirection,
-      wrap: pcWrap,
-      alignContent: pcAlignContent,
-      justifyContent: pcJustifyContent,
-      alignItems: pcAlignItems,
-      gap: pcGap,
-    }),
+
+    generateFlexContainerResponsiveClass(
+      {
+        direction: tbDirection,
+        wrap: tbWrap,
+        alignContent: tbAlignContent,
+        justifyContent: tbJustifyContent,
+        alignItems: tbAlignItems,
+        m: tbM,
+        mx: tbMx,
+        my: tbMy,
+        mt: tbMt,
+        mb: tbMb,
+        mr: tbMr,
+        ml: tbMl,
+        p: tbP,
+        px: tbPx,
+        py: tbPy,
+        pt: tbPt,
+        pb: tbPb,
+        pr: tbPr,
+        pl: tbPl,
+        gap: tbGap,
+      },
+      "tb",
+    ),
+    generateFlexContainerResponsiveClass(
+      {
+        direction: pcDirection,
+        wrap: pcWrap,
+        alignContent: pcAlignContent,
+        justifyContent: pcJustifyContent,
+        alignItems: pcAlignItems,
+        m: pcM,
+        mx: pcMx,
+        my: pcMy,
+        mt: pcMt,
+        mb: pcMb,
+        mr: pcMr,
+        ml: pcMl,
+        p: pcP,
+        px: pcPx,
+        py: pcPy,
+        pt: pcPt,
+        pb: pcPb,
+        pr: pcPr,
+        pl: pcPl,
+        gap: pcGap,
+      },
+      "pc",
+    ),
   ]
     .filter(Boolean)
     .join(" ");
 
-  const flexGap = () => {
-    if (gap && !["xs", "s", "m", "l", "xl"].includes(gap)) {
-      return { gap: gap };
-    }
-  };
   return (
-    <div style={flexGap()} className={className}>
+    <div className={className} style={style}>
       {children}
     </div>
   );
